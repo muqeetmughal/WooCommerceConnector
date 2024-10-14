@@ -97,7 +97,7 @@ def get_log_status():
             message = _("Last sync request is queued")
             alert_class = "alert-warning"
         elif log[0].status=="Error":
-            message = _("Last sync request was failed, check <a href='../desk#Form/woocommerce Log/{0}'> here</a>"
+            message = _("Last sync request was failed, check <a href='../Form/woocommerce Log/{0}'> here</a>"
                 .format(log[0].name))
             alert_class = "alert-danger"
         else:
