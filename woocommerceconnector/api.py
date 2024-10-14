@@ -47,9 +47,19 @@ def sync_woocommerce_resources():
             frappe.local.form_dict.count_dict["customers"] = 0
             frappe.local.form_dict.count_dict["products"] = 0
             frappe.local.form_dict.count_dict["orders"] = 0
-            sync_products(woocommerce_settings.price_list, woocommerce_settings.warehouse, True if woocommerce_settings.sync_items_from_woocommerce_to_erp == 1 else False)
-            sync_customers()
-            sync_orders()
+            try:
+                sync_products(woocommerce_settings.price_list, woocommerce_settings.warehouse, True if woocommerce_settings.sync_items_from_woocommerce_to_erp == 1 else False)
+            except Exception as e:
+                make_woocommerce_log(title="Product Sync Failed", status="Error", method='frappe.local.form_dict.cmd',message=frappe.get_traceback(), exception=True)
+            try:
+                sync_customers()
+            except Exception as e:
+                make_woocommerce_log(title="Customer Sync Failed", status="Error", method='frappe.local.form_dict.cmd',message=frappe.get_traceback(), exception=True)
+            try:
+                sync_orders()
+            except Exception as e:
+                make_woocommerce_log(title="Order Sync Failed", status="Error", method='frappe.local.form_dict.cmd',message=frappe.get_traceback(), exception=True)
+
             # close_synced_woocommerce_orders() # DO NOT GLOBALLY CLOSE
             if woocommerce_settings.sync_item_qty_from_erpnext_to_woocommerce:
                 update_item_stock_qty()
