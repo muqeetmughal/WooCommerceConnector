@@ -48,14 +48,17 @@ def sync_woocommerce_resources():
             frappe.local.form_dict.count_dict["products"] = 0
             frappe.local.form_dict.count_dict["orders"] = 0
             try:
+                make_woocommerce_log(title="Sync Product Started", status="Started", method=frappe.local.form_dict.cmd, message="Sync Product Started")
                 sync_products(woocommerce_settings.price_list, woocommerce_settings.warehouse, True if woocommerce_settings.sync_items_from_woocommerce_to_erp == 1 else False)
             except Exception as e:
                 make_woocommerce_log(title="Product Sync Failed", status="Error", method='frappe.local.form_dict.cmd',message=frappe.get_traceback(), exception=True)
             try:
+                make_woocommerce_log(title="Sync Customer Started", status="Started", method=frappe.local.form_dict.cmd, message="Sync Customer Started")
                 sync_customers()
             except Exception as e:
                 make_woocommerce_log(title="Customer Sync Failed", status="Error", method='frappe.local.form_dict.cmd',message=frappe.get_traceback(), exception=True)
             try:
+                make_woocommerce_log(title="Sync Order Started", status="Started", method=frappe.local.form_dict.cmd, message="Sync Order Started")
                 sync_orders()
             except Exception as e:
                 make_woocommerce_log(title="Order Sync Failed", status="Error", method='frappe.local.form_dict.cmd',message=frappe.get_traceback(), exception=True)
