@@ -181,7 +181,7 @@ def get_woocommerce_items(ignore_filter_conditions=False):
     for page_idx in range(1, int( response.headers.get('X-WP-TotalPages')) or 1):
         response = get_request_request('products?per_page={0}&page={1}&{2}'.format(_per_page,page_idx+1,filter_condition) )
         woocommerce_products.extend(response.json())
-    make_woocommerce_log(title="Check2", status="Success", method=frappe.local.form_dict.cmd, message=f"Price List: {str(price_list)}, Warehouse : {str(warehouse)}, sync_from_woocommerce: {str(len(woocommerce_products))} ,RESPONSE :{response}")
+    make_woocommerce_log(title="Check2", status="Success", method=frappe.local.form_dict.cmd, message=f"sync_from_woocommerce: {str(len(woocommerce_products))} ,RESPONSE :{response}")
    
     
 
