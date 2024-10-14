@@ -15,6 +15,7 @@ import json
 woocommerce_variants_attr_list = ["option1", "option2", "option3"]
 
 def sync_products(price_list, warehouse, sync_from_woocommerce=False):
+    make_woocommerce_log(title="Check1", status="Success", method=frappe.local.form_dict.cmd, message=f"Price List: {str(price_list)}, Warehouse : {str(warehouse)}, sync_from_woocommerce: {str(sync_from_woocommerce)}")
     woocommerce_settings = frappe.get_doc("WooCommerce Config", "WooCommerce Config")
     woocommerce_item_list = []
     if sync_from_woocommerce:
